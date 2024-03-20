@@ -30,6 +30,7 @@ function App() {
         };
       }
     });
+    console.log(projects);
   };
 
   function onClickHandler() {
@@ -52,7 +53,11 @@ function App() {
         projects={projects}
         projectSelector={projectSelector}
       />
-      <ChatBar project={project} />
+      <ChatBar
+        project={project}
+        onClick={addTasksToProject}
+        projects={projects}
+      />
     </>
   );
 }
