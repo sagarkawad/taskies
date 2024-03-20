@@ -1,5 +1,5 @@
-import ChatSidebar from "./components/ChatSideBar";
-import ChatBar from "./components/ChatBar";
+import ChatSidebar from "./components/ChatSidebar.jsx";
+import ChatBar from "./components/ChatBar.jsx";
 
 import { useState, useRef } from "react";
 
