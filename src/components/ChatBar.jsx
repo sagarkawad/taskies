@@ -1,10 +1,33 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
-export default function ChatBar({ project, onClick, projects }) {
+export default function ChatBar({
+  project,
+  onClick,
+  projects,
+  deleteHandler,
+  modifyTask,
+}) {
   let taskIp = useRef();
 
   function onClickHandler() {
     taskIp.current.value = "";
+  }
+
+  const [activeItems, setActiveItems] = useState([]);
+  const textRefs = useRef([]);
+
+  const handleToggle = (index) => {
+    const updatedActiveItems = [...activeItems];
+    updatedActiveItems[index] = !updatedActiveItems[index];
+    setActiveItems(updatedActiveItems);
+  };
+
+  const textStriker = (index) => {
+    handleToggle(index); // Toggle the active state for the clicked item
+  };
+
+  function selectHandler(el) {
+    console.log(el);
   }
 
   return (
@@ -27,7 +50,29 @@ export default function ChatBar({ project, onClick, projects }) {
           {Object.keys(projects).length !== 0 &&
             project != "" &&
             projects[project].map((el, i) => {
-              return <li key={i}>{el}</li>;
+              return (
+                <li
+                  key={i}
+                  ref={(ref) => (textRefs.current[i] = ref)}
+                  className={activeItems[i] ? "line-through" : ""}
+                >
+                  {el} <button onClick={() => textStriker(i)}>✔️</button>
+                  <button
+                    onClick={() => {
+                      deleteHandler(project, [el]);
+                    }}
+                  >
+                    ❌
+                  </button>
+                  {/* <button
+                    onClick={() => {
+                      selectHandler(el);
+                    }}
+                  >
+                    🔤
+                  </button> */}
+                </li>
+              );
             })}
         </ol>
       </div>

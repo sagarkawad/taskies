@@ -44,6 +44,46 @@ function App() {
     setProject(e.target.textContent);
   }
 
+  const removeTasksFromProject = (projectName, tasksToRemove) => {
+    setProjects((prevProjects) => {
+      // Check if the project exists
+      if (prevProjects.hasOwnProperty(projectName)) {
+        // Filter out the tasks to remove from the project's tasks array
+        const updatedTasks = prevProjects[projectName].filter(
+          (task) => !tasksToRemove.includes(task)
+        );
+        // Update the project's tasks array with the filtered tasks
+        return {
+          ...prevProjects,
+          [projectName]: updatedTasks,
+        };
+      } else {
+        // If the project doesn't exist, do nothing (or you can throw an error)
+        return prevProjects;
+      }
+    });
+  };
+
+  function modifyTask(projectName, oldTask, newTask) {
+    setProjects((prevProjects) => {
+      // Check if the project exists
+      if (prevProjects.hasOwnProperty(projectName)) {
+        // Map over the tasks array of the project and replace the old task with the new task
+        const updatedTasks = prevProjects[projectName].map((task) =>
+          task === oldTask ? newTask : task
+        );
+        // Update the project's tasks array with the modified tasks
+        return {
+          ...prevProjects,
+          [projectName]: updatedTasks,
+        };
+      } else {
+        // If the project doesn't exist, do nothing (or you can throw an error)
+        return prevProjects;
+      }
+    });
+  }
+
   return (
     <>
       <ChatSidebar
@@ -57,6 +97,8 @@ function App() {
         project={project}
         onClick={addTasksToProject}
         projects={projects}
+        deleteHandler={removeTasksFromProject}
+        modifyTask={modifyTask}
       />
     </>
   );

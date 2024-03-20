@@ -32,15 +32,17 @@ const ChatSidebar = function ChatSidebar({
         </div>
         <div className="p-4">
           {Object.keys(projects).map((key, index) => (
-            <h1
-              key={index}
-              onClick={(e) => {
-                projectSelector(e);
-                onClickHandler();
-              }}
-            >
-              {key}
-            </h1>
+            <div className="flex justify-between" key={index}>
+              <h1
+                onClick={(e) => {
+                  projectSelector(e);
+                  onClickHandler();
+                }}
+              >
+                {key}
+              </h1>
+              <button>❌</button>
+            </div>
           ))}
         </div>
         <div className="flex fixed bottom-0">
