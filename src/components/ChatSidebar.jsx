@@ -1,7 +1,12 @@
 // ChatSidebar.js
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 
-const ChatSidebar = () => {
+const ChatSidebar = function ChatSidebar({
+  onClick,
+  projects,
+  ref2,
+  projectSelector,
+}) {
   const [flag, setFlag] = useState(true);
 
   function onClickHandler() {
@@ -26,11 +31,23 @@ const ChatSidebar = () => {
           <button onClick={onClickHandler}>X</button>
         </div>
         <div className="p-4">
-          <h1>dummy</h1>
+          {Object.keys(projects).map((key, index) => (
+            <h1
+              key={index}
+              onClick={(e) => {
+                projectSelector(e);
+                onClickHandler();
+              }}
+            >
+              {key}
+            </h1>
+          ))}
         </div>
         <div className="flex fixed bottom-0">
-          <input type="text" className="text-black" />
-          <button className="border w-8">+</button>
+          <input type="text" className="text-black" ref={ref2} />
+          <button className="border w-8" onClick={onClick}>
+            +
+          </button>
         </div>
       </div>
     </>
